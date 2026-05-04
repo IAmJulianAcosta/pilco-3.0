@@ -4,7 +4,7 @@ const path = require('path');
 
 const SECRET = process.env.WEBHOOK_SECRET || 'pilco-rebuild-2026';
 const PORT = process.env.PORT || 3000;
-const APP_DIR = path.dirname(require.main.filename);
+const APP_DIR = __dirname;
 const BUILD_DIR = path.join(APP_DIR, 'build');
 const PUBLIC_HTML = process.env.PUBLIC_HTML || path.join(APP_DIR, '..', '..', 'public_html');
 
@@ -23,16 +23,17 @@ function runBuild(callback) {
 }
 
 const server = http.createServer((req, res) => {
-  const url = new URL(req.url, `http://localhost`);
+  const urlPath = req.url.split('?')[0].replace(/^\/build-api/, '');
 
-  if (req.method === 'GET' && url.pathname === '/health') {
+  if (req.method === 'GET' && (urlPath === '/health' || urlPath === '')) {
     res.writeHead(200, { 'Content-Type': 'text/plain' });
     res.end('OK');
     return;
   }
 
-  if (req.method === 'POST' && url.pathname === '/rebuild') {
-    const secret = url.searchParams.get('secret') || req.headers['x-webhook-secret'];
+  if (req.method === 'POST' && urlPath === '/rebuild') {
+    const params = new URLSearchParams(req.url.split('?')[1] || '');
+    const secret = params.get('secret') || req.headers['x-webhook-secret'];
     if (secret !== SECRET) {
       res.writeHead(403, { 'Content-Type': 'text/plain' });
       res.end('Forbidden');
@@ -42,7 +43,7 @@ const server = http.createServer((req, res) => {
     res.end('Build started\n');
     runBuild((err, stdout, stderr) => {
       if (err) console.error('Build error:', stderr);
-      else console.log('Build ok:', stdout.slice(-200));
+      else console.log('Build ok');
     });
     return;
   }
@@ -52,5 +53,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`Pilco build server on port ${PORT}`);
+  console.log(`Pilco build server on port ${PORT}, app dir: ${APP_DIR}`);
 });
