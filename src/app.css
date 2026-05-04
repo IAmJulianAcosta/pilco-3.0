@@ -1,0 +1,138 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 300;
+	src: url('/fonts/light.otf') format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 400;
+	src: url('/fonts/book.otf') format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 500;
+	src: url('/fonts/avenir.otf') format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 600;
+	src: url('/fonts/medium.otf') format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 800;
+	src: url('/fonts/heavy.otf') format('opentype');
+	font-display: swap;
+}
+@font-face {
+	font-family: 'Avenir';
+	font-weight: 900;
+	src: url('/fonts/black.otf') format('opentype');
+	font-display: swap;
+}
+
+@theme {
+	--font-avenir: 'Avenir', Arial, sans-serif;
+	--color-pilco-blue: #003399;
+	--color-pilco-navy: #000380;
+	--color-pilco-accent: #3399CC;
+	--color-pilco-orange: #F98B06;
+	--color-pilco-gray: #f3f4f6;
+	--color-pilco-dark: #111827;
+}
+
+body {
+	font-family: var(--font-avenir);
+	@apply text-base leading-relaxed text-pilco-dark;
+}
+
+.container-site {
+	@apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+.btn-primary {
+	@apply inline-block bg-pilco-blue text-white px-8 py-3 rounded-lg font-semibold
+		hover:opacity-90 transition-opacity;
+}
+
+.btn-outline {
+	@apply inline-block border-2 border-white text-white px-6 py-2 rounded-lg font-semibold
+		hover:bg-white hover:text-pilco-navy transition-colors;
+}
+
+.section-title {
+	@apply text-2xl md:text-3xl font-bold text-pilco-navy;
+}
+
+.card {
+	@apply bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow;
+}
+
+.page-hero {
+	background-color: #000380;
+	position: relative;
+	overflow: hidden;
+}
+.page-hero-overlay {
+	background-color: rgba(0, 3, 128, 0.8);
+}
+@media (min-width: 768px) {
+	.page-hero-overlay {
+		background: linear-gradient(
+			to right,
+			rgba(0, 3, 128, 0.8) 50%,
+			rgba(0, 3, 128, 0.4) 70%,
+			rgba(0, 3, 128, 0) 100%
+		);
+	}
+}
+
+.prose {
+	@apply leading-relaxed;
+}
+.prose p {
+	@apply mb-4;
+}
+.prose h2 {
+	@apply text-2xl font-bold text-pilco-navy mb-4 mt-8;
+}
+.prose h3 {
+	@apply text-xl font-semibold text-pilco-navy mb-3 mt-6;
+}
+.prose a {
+	@apply text-pilco-blue hover:underline;
+}
+.prose ul {
+	@apply list-disc pl-6 mb-4;
+}
+.prose img {
+	@apply my-6 max-w-full;
+}
+.prose figure,
+.prose .wp-caption {
+	@apply my-6 border border-gray-200 inline-block max-w-full;
+}
+.prose figure img,
+.prose .wp-caption img {
+	@apply my-0 block;
+}
+.prose figcaption,
+.prose .wp-caption-text {
+	@apply text-sm text-gray-500 italic px-3 py-2 bg-gray-50 border-t border-gray-200;
+}
+.prose input[type='text'],
+.prose input[type='email'],
+.prose input[type='tel'],
+.prose textarea {
+	@apply w-full border border-gray-300 rounded-lg px-4 py-3 mb-2 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pilco-blue focus:border-transparent;
+}
+.prose input[type='submit'],
+.prose button[type='submit'] {
+	@apply inline-block bg-pilco-blue text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-800 transition-colors cursor-pointer;
+}
